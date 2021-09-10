@@ -58,7 +58,7 @@ export default {
   methods: {
     async fetchData() {
         const token = process.env.TOKEN
-        let data = await axios('http://proxy.given.codes/https://api.yelp.com/v3/businesses/search', {
+        let data = await axios('https://api.yelp.com/v3/businesses/search', {
           headers: {
             'Authorization': `Bearer ${token}`
           },
