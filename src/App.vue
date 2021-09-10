@@ -1,32 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id='app'>
+    <v-main>
+      <router-view/>
+    </v-main>
+    <v-footer 
+    padless
+    style='background-color: transparent; color: white;'
+    z-index='-1'>
+      <v-col
+        class="text-center"
+        cols="12">
+      Made with ❤️ for my wonderful girlfriend Elena
+      </v-col>
+    </v-footer>
+  </v-app>
 </template>
 
-<style lang="scss">
+<script>
+
+export default {
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+};
+</script>
+
+<style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  background-image: linear-gradient(145deg, rgb(221, 160, 245), rgb(86, 124, 228));
+  overflow: hidden;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+/* #footer {
+  margin: 0 auto;
+  color: #F8F0E3;
+  position: relative;
+  bottom: 1rem;
+  font-size: 1.2rem;
+} */
 </style>
