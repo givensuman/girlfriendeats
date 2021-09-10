@@ -65,7 +65,6 @@ export default {
   methods: {
       handleFilters() {
           this.$emit('handleFilters', {price: this.price, range: this.range})
-          console.log(typeof this.price, typeof this.range)
       }
   },
 }
