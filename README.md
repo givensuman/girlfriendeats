@@ -1,19 +1,7 @@
 # girlfriendeats
 
-## Project setup
-```
-yarn install
-```
+This is a site built to help my girlfriend find a restaurant to eat.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+It took approximately as long to build as it takes her to pick.
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Don't tell her I said that...

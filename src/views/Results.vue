@@ -57,8 +57,11 @@ export default {
   },
   methods: {
     async fetchData() {
+<<<<<<< HEAD
         const token = process.env.VUE_APP_TOKEN
-        console.log(token)
+=======
+        const token = process.env.TOKEN
+>>>>>>> 01cc7b89800f33d8dd50270ee9f0ebdb57d39ae4
         let data = await axios('https://proxy.given.codes/https://api.yelp.com/v3/businesses/search', {
           headers: {
             'Authorization': `Bearer ${token}`
