@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import Results from '../views/Results.vue'
+import PageMissing from '../views/404.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
       range: route.query.r
     })
   },
+  {
+    path: '/*',
+    name: '404',
+    component: PageMissing
+  }
 ]
 
 const router = new VueRouter({
