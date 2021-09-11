@@ -57,8 +57,9 @@ export default {
   },
   methods: {
     async fetchData() {
-        const token = 'ynFHQhT44ILhJBPUejKDhdtDGVDCGTkYSrP65-Xh7-JO_IdcaCzWsOtinjZ3QCu8P9VYnOClnSLoBXrhd2zMcLzFLA9bD7oscH5uxDFdgMmARLEjcdOOdscXxYI6YXYx'
-        let data = await axios('http://proxy.given.codes/https://api.yelp.com/v3/businesses/search', {
+        const token = process.env.VUE_APP_TOKEN
+        console.log(token)
+        let data = await axios('https://proxy.given.codes/https://api.yelp.com/v3/businesses/search', {
           headers: {
             'Authorization': `Bearer ${token}`
           },
