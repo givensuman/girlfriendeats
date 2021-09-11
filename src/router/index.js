@@ -22,7 +22,7 @@ const routes = [
       price: route.query.p,
       range: route.query.r
     })
-  }
+  },
 ]
 
 const router = new VueRouter({
