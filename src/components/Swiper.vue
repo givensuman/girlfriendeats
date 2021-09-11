@@ -34,15 +34,17 @@
                             {{ type.title }}<span v-if='index !== item.categories.length - 1'>,</span>
                         </span>
                     </v-row>
-                    <v-row align='center'>
-                        <v-icon left color="purple darken-2">mdi-map-marker</v-icon>
+                    <v-row>
                         <span class='text'>
-                            {{ item.location.display_address[0] }} {{ item.location.display_address[1] }}, {{ item.location.city }}
+                            <v-icon left color="purple darken-2">mdi-map-marker</v-icon>
+                            {{ item.location.display_address[0] }} {{ item.location.display_address[1] }}
                         </span>
                     </v-row>
                     <v-row>
-                        <v-icon left color="purple darken-2">mdi-phone</v-icon>
-                        <span class='text'>{{item.display_phone}}</span>
+                        <span class='text'>
+                            <v-icon left color="purple darken-2">mdi-phone</v-icon>
+                            {{item.display_phone}}
+                        </span>
                     </v-row>
                 </v-col>
             </v-card-text>
@@ -53,14 +55,26 @@
             </v-row>
             <v-row align='center'>
                     <v-btn 
+                    v-if='!selection'
                     color='primary' 
                     elevation="9" 
                     x-large 
-                    style='margin: 0 auto'
+                    style='margin: 10px auto 0'
                     bottom
                     @click='handleSelection(item.url)'>
                         This one!
                     </v-btn>
+                    <v-alert
+                    type='success'
+                    elevation='9'
+                    prominent
+                    v-else
+                    dismissable
+                    max-width='200px'
+                    style='background-color: #3f51b5!important; margin-top: 10px'
+                    >
+                    Yay! Redirecting you to their website...
+                    </v-alert>
             </v-row>
         </v-card>
     </flickity>
@@ -81,11 +95,13 @@ export default {
                 wrapAround: true,
                 fullScreen: true,
                 accessibility: true,
-             }
+             },
+             selection: false
         }
     },
     methods: {
         handleSelection(url) {
+            this.selection = true
             this.$emit('handleSelection', url)
         }
     }
@@ -110,12 +126,23 @@ export default {
     color: grey;
 }
 
+.v-alert {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+}
+
 .flickity-enabled {
     max-width: 700px;
     margin: 0 auto;
     position: relative;
     top: clamp(10px, 5vw, 20vh);
     min-height: 650px; /* wtf */
+
+    @media (max-width: 700px) {
+        top: 0;
+    }
 }
 
 .flickity-viewport {

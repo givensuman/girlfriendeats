@@ -2,17 +2,7 @@
 
 <div id='results' v-if='!loading'>
   <Swiper :data='data' @handleSelection='handleSelection'/>
-  <v-alert
-  type='success'
-  elevation='9'
-  prominent
-  v-if='selection'
-  dismissable
-  max-width='200px'
-  style='background-color: #3f51b5!important'
-  >
-  Yay! Redirecting you to their website...
-  </v-alert>
+  
   <canvas id='confetti'></canvas>
 </div>
 <Loading v-else />
@@ -35,7 +25,6 @@ export default {
   data() {
     return {
       loading: true,
-      selection: false,
       data: {},
       time: 3
     }
@@ -58,6 +47,7 @@ export default {
   methods: {
     async fetchData() {
         const token = process.env.VUE_APP_TOKEN
+
         let data = await axios('https://proxy.given.codes/https://api.yelp.com/v3/businesses/search', {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -75,7 +65,6 @@ export default {
         return data
     },
     handleSelection(url) {
-      this.selection = true
 
       let confettiSettings = {"target":"confetti",
       "max":"300","size":"1","animate":true,

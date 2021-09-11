@@ -68,14 +68,14 @@
   max-width: 500px;
   margin: 0 auto;
   position: relative;
-  top: 20vh;
+  top: clamp(10px, 5vw, 20vh);
   
   background-color: #F8F0E3;
   border-radius: 20px;
   padding: clamp(1rem, 3rem, 5rem);
 
   h1 {
-    font-size: 3rem;
+    font-size: clamp(2rem, 10vw, 4rem)
   }
 }
 </style>

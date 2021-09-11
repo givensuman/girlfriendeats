@@ -3,7 +3,8 @@
     <v-main>
       <router-view/>
     </v-main>
-    <v-footer 
+    <v-footer
+    id='footer'
     padless
     style='background-color: transparent; color: white;'
     z-index='-1'>
@@ -33,11 +34,9 @@ export default {
   overflow: hidden;
 }
 
-/* #footer {
-  margin: 0 auto;
-  color: #F8F0E3;
-  position: relative;
-  bottom: 1rem;
-  font-size: 1.2rem;
-} */
+@media (max-height: 470px) {
+  #footer {
+    visibility: hidden!important;
+  }
+}
 </style>

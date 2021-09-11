@@ -53,6 +53,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='scss'>
+.v-btn {
+  max-width: 120%;
+}
+.v-btn__content {
+  @media (max-width: 350px) {
+    span {
+      font-size: .7rem;
+    }
+  }
+}
 </style>
