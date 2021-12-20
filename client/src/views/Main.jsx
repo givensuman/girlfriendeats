@@ -1,5 +1,9 @@
 import React, { cloneElement, useState } from 'react'
-import { Card as MUICard} from '@mui/material'
+import { 
+    Card as MUICard, 
+    CardContent,
+    Typography
+ } from '@mui/material'
 import styled from '@emotion/styled'
 
 import FormLocation from '../components/FormLocation'
@@ -11,7 +15,7 @@ import elenaError from '../assets/elenaError.png'
 
 const Card = styled(MUICard)`
     max-width: 95%;
-    padding: 0 2em 2em;
+    padding: 0 2em 0;
 `
 
 const Header = styled.h1`
@@ -21,7 +25,7 @@ const Header = styled.h1`
 const Image = styled.img`
     height: 50px;
     position: relative;
-    left: 2em;
+    left: 5em;
     cursor: pointer;
 `
 
@@ -63,6 +67,12 @@ const Main = () => {
                     setData(shallow)
                 }
             })}
+            
+        <CardContent>
+            <Typography variant='paragraph'>
+                Made with 💜 for my girlfriend Elena
+            </Typography>
+        </CardContent>
         </Card>
         </Wrapper>
     )

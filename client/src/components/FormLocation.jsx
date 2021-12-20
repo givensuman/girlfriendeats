@@ -15,7 +15,7 @@ const Location = ({ up, update }) => {
         >
             <TextField
             label="Where you at?"
-            helperText="Zip code, city, or address, etc."
+            helperText="A zip code, city, or address will work"
             onChange={e => {
                 setZipCode(e.target.value)
                 e.target.value.length >= 1 ?

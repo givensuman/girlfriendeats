@@ -76,7 +76,6 @@ const _Card = ({ data, animate }) => {
                         </Stack>
                     </Stack>
                 </Typography>
-                
                 <Button 
                 sx={{ width: '100%', marginTop: '1em' }}
                 onClick={() => {
