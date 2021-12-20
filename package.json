@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "cd server && yarn dev",
     "kill": "npx kill-port 1337",
-    "start": "(npm install); (cd client && npm run build); (cd server && node index.js);",
+    "build": "(npm install); (cd client && npm run build); (cd server && node index.js);",
+    "start": "cd server && node index.js",
     "postinstall": "(cd server && npm install); (cd client && npm install);"
   }
 }
