@@ -11,6 +11,6 @@
     "dev": "cd server && yarn dev",
     "kill": "npx kill-port 1337",
     "start": "cd client && yarn build && cd ../server && node index.js",
-    "postinstall": "npm install --prefix ./server && npm install --prefix ./client"
+    "postinstall": "(cd server && npm install); (cd client && npm install);"
   }
 }
