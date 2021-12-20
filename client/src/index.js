@@ -14,7 +14,7 @@ import {
 import Main from './views/Main'
 import Results from './views/Results'
 import NotFound from './views/NotFound'
-import elena from '../assets/elena.png'
+import elena from './assets/elena.png'
 
 
 const theme = createTheme({
