@@ -46,6 +46,7 @@ const App = () => {
     </ThemeProvider>
     <Helmet>
       <title>girlfriendeats</title>
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍕</text></svg>" />
       <meta name="title" content="girlfriendeats" />
       <meta name="description" content="A site for helping my girlfriend pick a restaurant" />
       <meta property="og:type" content="website" />
