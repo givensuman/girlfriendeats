@@ -8,10 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "cd server && yarn dev",
+    "dev": "(cd server && yarn dev);",
     "kill": "npx kill-port 1337",
-    "build": "(npm install); (cd client && npm run build); (cd server && node index.js);",
-    "start": "cd server && node index.js",
-    "postinstall": "(cd server && npm install); (cd client && npm install);"
+    "build": "(yarn install); (cd client && yarn install && yarn build); (cd server && yarn install);",
+    "start": "node server"
   }
 }
