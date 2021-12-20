@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Helmet } from 'react-helmet'
 import './index.css'
 import 'animate.css'
 
@@ -13,6 +14,7 @@ import {
 import Main from './views/Main'
 import Results from './views/Results'
 import NotFound from './views/NotFound'
+import elena from '../assets/elena.png'
 
 
 const theme = createTheme({
@@ -32,15 +34,32 @@ const theme = createTheme({
 
 const App = () => {
   return (
+    <>
     <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-          <Route path='/results' element={<Results />} />
-          <Route path='/*' element={<NotFound />} />
-          <Route path='/' element={<Main />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path='/results' element={<Results />} />
+        <Route path='/*' element={<NotFound />} />
+        <Route path='/' element={<Main />} />
+      </Routes>
+    </Router>
     </ThemeProvider>
+    <Helmet>
+      <title>girlfriendeats</title>
+      <meta name="title" content="girlfriendeats" />
+      <meta name="description" content="A site for helping my girlfriend pick a restaurant" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="girlfriendeats.herokuapp.com" />
+      <meta property="og:title" content="girlfriendeats" />
+      <meta property="og:description" content="A site for helping my girlfriend pick a restaurant" />
+      <meta property="og:image" content={elena} />
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="girlfriendeats.herokuapp.com" />
+      <meta property="twitter:title" content="girlfriendeats" />
+      <meta property="twitter:description" content="A site for helping my girlfriend pick a restaurant" />
+      <meta property="twitter:image" content={elena} />
+    </Helmet>
+    </>
   )
 }
 

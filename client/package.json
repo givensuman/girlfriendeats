@@ -16,6 +16,7 @@
     "confetti-js": "^0.0.18",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
     "react-lazyload": "^3.2.0",
     "react-material-ui-carousel": "^3.1.1",
     "react-router-dom": "^6.1.1",
