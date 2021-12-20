@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 
 const Carousel = styled(MUICarousel)`
     padding: 0 4em;
-    min-height: fit-content;
+    min-height: 650px;
 `
 
 const _Carousel = ({children}) => {
