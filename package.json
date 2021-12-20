@@ -1,0 +1,15 @@
+{
+  "name": "girlfriendeats",
+  "version": "2.0.0",
+  "description": "A web app for helping my girlfriend find a place to eat",
+  "main": "index.js",
+  "repository": "https://www.github.com/givensuman/girlfriendeats",
+  "author": "Given Suman",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "cd server && yarn dev",
+    "kill": "npx kill-port 1337",
+    "start": "cd client && yarn build && cd ../server && node index.js"
+  }
+}
