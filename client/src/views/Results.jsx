@@ -5,6 +5,7 @@ import ConfettiGenerator from 'confetti-js'
 import Loading from '../components/Loading'
 import Carousel from '../components/ResultCarousel'
 import Card from '../components/ResultCard'
+import Error from '../components/Error'
 import Wrapper from '../components/Wrapper'
 
 const Results = () => {
@@ -18,6 +19,7 @@ const Results = () => {
     const [data, setData] = useState({
         businesses: []
     })
+    const [loading, setLoading] = useState(false)
 
     const animate = () => {
         const confettiSettings = { 
@@ -40,8 +42,11 @@ const Results = () => {
         })
 
         const getData = async () => {
-            let data = await axios.post('/api', params)
-            setData(data.data)
+            setLoading(true)
+            let res = await axios.post('/api', params)
+            res.status === 200 ? setData(res.data) : setData('error')
+            console.log(res)
+            setLoading(false)
         }
         getData()
     }, [params])
@@ -56,16 +61,32 @@ const Results = () => {
                 maxWidth: '100%'
             }}
             ></canvas>
-            {!data.businesses.length > 0 ? <Loading /> :
-                <Carousel>
-                    {data.businesses.map(item =>
-                            <Card
-                            data={item} 
-                            key={item.id} 
-                            animate={animate}
-                            />
-                        )}
-                </Carousel>
+            {/* Brace yourself for ternaries, different use-cases provided... really weird display errors when unaccounted for */}
+            {loading ? <Loading /> :
+            data === 'error' ? 
+            <Error 
+            heading={"Something went wrong with the app!"}
+            subheading={"Try again later!"}
+            /> :
+            !data.businesses.length > 0 ? 
+            <Error 
+            heading={"I couldn't find anything matching that!"}
+            subheading={"Try making your search less specific."}
+            /> :
+            data.businesses.length === 1 ?
+            <Card
+            data={data.businesses[0]}
+            animate={animate}
+            /> :
+            <Carousel>
+                {data.businesses.map(item =>
+                        <Card
+                        data={item} 
+                        key={item.id} 
+                        animate={animate}
+                        />
+                    )}
+            </Carousel>
             }
         </Wrapper>
     )

@@ -27,6 +27,8 @@ const Image = styled.img`
     position: relative;
     left: 5em;
     cursor: pointer;
+    user-select: none;
+    focus: none;
 `
 
 const Main = () => {

@@ -46,18 +46,19 @@ const _Card = ({ data, animate }) => {
                     {data.name}
                 </Typography>
                 <Box direction='row' sx={{ marginBottom: '0.5em' }}>
-                    {data.categories.map(item => 
+                    {data.categories.map((item, index) => 
                             <Chip
                             size='small'
                             variant='outlined'
                             label={item.title}
+                            key={index}
                             sx={{
                                 margin: '0.2em 0.2em 0.2em 0'
                             }}
                             />
                         )}
                 </Box>
-                <Typography>
+                <Stack>
                     <Stack spacing={1}>
                         <Box alignItems='center' justifyContent='center' >
                             <PhoneIcon fontSize='small' sx={{ marginRight: '0.2em'}} />
@@ -75,7 +76,7 @@ const _Card = ({ data, animate }) => {
                         {`(${data.review_count})`}
                         </Stack>
                     </Stack>
-                </Typography>
+                </Stack>
                 <Button 
                 sx={{ width: '100%', marginTop: '1em' }}
                 onClick={() => {
@@ -101,7 +102,8 @@ const _Card = ({ data, animate }) => {
         variant='contained' 
         sx={{ 
             marginTop: '3em',
-            width: '100%'
+            width: '100%',
+            maxWidth: '300px'
          }}
         onClick={() => navigate('/')}
         >

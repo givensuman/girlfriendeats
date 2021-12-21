@@ -30,7 +30,7 @@ const Filters = ({ down, update, data }) => {
             />
             <Label>What's the most you want to spend?</Label>
             <Slider 
-            defaultlValue={2}
+            defaultValue={2}
             valueLabelDisplay='auto'
             valueLabelFormat={value => '$'.repeat(value)}
             step={1}
@@ -52,7 +52,7 @@ const Filters = ({ down, update, data }) => {
             >
                 <Button
                 variant='outlined'
-                    onClick={() => down()}
+                onClick={() => down()}
                 >
                     Go back
                 </Button>
