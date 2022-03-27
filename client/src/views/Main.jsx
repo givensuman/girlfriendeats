@@ -10,6 +10,7 @@ import FormLocation from '../components/FormLocation'
 import FormCategories from '../components/FormCategories'
 import FormFilters from '../components/FormFilters'
 import Wrapper from '../components/Wrapper'
+import Particles from '../components/Particles'
 import elena from '../assets/elena.png'
 import elenaError from '../assets/elenaError.png'
 
@@ -49,7 +50,8 @@ const Main = () => {
     ]
 
     return (
-        <Wrapper> 
+        <Wrapper>
+        <Particles /> 
         <Image 
         src={imageSource} 
         alt='Elena' 
