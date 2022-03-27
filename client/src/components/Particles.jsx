@@ -1,8 +1,6 @@
 import React from 'react'
 import Particles from 'react-tsparticles'
 
-import elena from '../assets/elena.png'
-
 const ParticlesComponent = () => {
     return (
         <Particles
@@ -466,47 +464,47 @@ const ParticlesComponent = () => {
                   },
                   "image": [
                     {
-                      "src": require('../assets/berry.png'),
+                      "src": require('../assets/food/berry.png'),
                       "width": 32,
                       "height": 32
                     },
                     {
-                      "src": require('../assets/cake.png'),
+                      "src": require('../assets/food/cake.png'),
                       "width": 32,
                       "height": 32
                     },
                     {
-                        "src": require('../assets/corn.png'),
+                        "src": require('../assets/food/corn.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/fries.png'),
+                        "src": require('../assets/food/fries.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/icecream.png'),
+                        "src": require('../assets/food/icecream.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/noodles.png'),
+                        "src": require('../assets/food/noodles.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/pineapple.png'),
+                        "src": require('../assets/food/pineapple.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/pizza.png'),
+                        "src": require('../assets/food/pizza.png'),
                         "width": 32,
                         "height": 32
                     },
                     {
-                        "src": require('../assets/watermelon.png'),
+                        "src": require('../assets/food/watermelon.png'),
                         "width": 32,
                         "height": 32
                     }
