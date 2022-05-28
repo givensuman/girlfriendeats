@@ -12,6 +12,8 @@ Built with
 
 Originally built with Vue + Vuetify, this has been updated! It now has a proper backend configuration where I was once using a sketchy proxy configuration to bypass Yelp's CORS policy. I also feel the UI has been enhanced greatly. 
 
+Updated again! Now runs on Next.js which means no more server/client configuration.
+
 #### Can I copy this?
 Uh, if you want. All you need is a .env in the server folder with your Yelp API key. Then install server and client dependencies and run `yarn dev`. Give credit if you do!
 

@@ -1,12 +1,11 @@
 import React from 'react'
-
 import Error from '../components/Error'
 
 const NotFound = () => {
     return (
         <Error 
-        heading={"I'm getting mixed messages!"}
-        subheading={"That, or the page you've requested doesn't exist..."}
+            message={'Page not found!'}
+            buttonMessage={`Let's go back home`}
         />
     )
 }
