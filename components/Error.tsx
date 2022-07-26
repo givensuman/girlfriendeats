@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import React from 'react'
 import { Button, Paper, Typography } from '@mui/material'
 import styled from '@emotion/styled'
