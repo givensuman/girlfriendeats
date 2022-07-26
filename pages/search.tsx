@@ -4,12 +4,14 @@ import { useRouter } from 'next/router'
 
 import React, { useEffect, useState, useCallback } from 'react'
 import { 
-    Card, CardHeader, CardMedia, CardContent, CardActions, Typography, Skeleton, Stack, Chip, Divider, Button
+    Card, CardHeader, CardMedia, CardContent, CardActions, Typography, Stack, Chip, Divider, Button
 } from '@mui/material'
 import { Star, StarHalf, StarOutline, Phone, Business, MonetizationOnOutlined } from '@mui/icons-material'
 import Carousel from '../components/Carousel'
 import Error from '../components/Error'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/react'
+import elena from '../assets/elena.png'
 
 interface YelpData {
     businesses?: [{
@@ -41,11 +43,20 @@ const Wrapper = styled.div`
     z-index: 2;
 `
 
+const spin = keyframes`
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+`
+
+const Loading = styled.img`
+    animation: ${spin} 1s ease infinite;
+`
+
 const Search = () => {
     const [ data, setData ] = useState<YelpData>({
         businesses: []
     })
-    const [ error, setError ] = useState(false)
+    const [ loading, setLoading ] = useState(false)
     const [ ready, setReady ] = useState(false)
 
     const { query, isReady } = useRouter()
@@ -53,12 +64,15 @@ const Search = () => {
     const getData = useCallback(async () => {
         if (isReady) {
             const { location, category, range, price } = query
+            setLoading(true)
             await fetch(`/api/yelp?location=${location}&category=${category}&range=${range}&price=${price}`)
                 .then(res => res.json())
                 .then((data: YelpData) => {
-                    if (data.error) setError(true)
-                    else setData(data)
-                    setReady(true)
+                    if (!data.error) {
+                        setData(data)
+                        setReady(true)
+                    }
+                    setLoading(false)
                 })
         }
     }, [query])
@@ -71,6 +85,10 @@ const Search = () => {
         <Head>
             <title>girlfriendpicks</title>
         </Head>
+
+        {
+            loading && <Loading src={elena.src} alt='elena' />
+        }
 
         {
         (data.error || !data.businesses) ? 
