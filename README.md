@@ -1,28 +1,24 @@
-# Create T3 App
+# girlfriendeats
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### A web app for helping my girlfriend find a place to eat.
 
-## What's next? How do I make an app with this?
+Built with 
+- React 
+- MaterialUI
+- Emotion
+- Yelp Fusion API
+  
+<hr />
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Originally built with Vue + Vuetify, this has been updated! It now has a proper backend configuration where I was once using a sketchy proxy configuration to bypass Yelp's CORS policy. I also feel the UI has been enhanced greatly. 
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Updated again! Now runs on Next.js which means no more server/client configuration.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+#### Can I copy this?
+Uh, if you want. All you need is a .env in the server folder with your Yelp API key. Then install server and client dependencies and run `yarn dev`. Give credit if you do!
 
-## Learn More
+#### Is this maintained?
+If this repository is ever updated it will probably be a large scale re-write when I remember how bad my past self was at coding.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+#### Misc.
+Took approximately long to make as it takes my girlfriend to pick a place. (Don't tell her I said that.)
