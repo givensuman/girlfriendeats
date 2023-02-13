@@ -4,13 +4,14 @@ import { api } from "../utils/api"
 
 import {  
   CssBaseline,
-  createTheme, ThemeProvider
+  createTheme, ThemeProvider,
+  Box
 } from "@mui/material"
-
-import Particles from "../components/Particles"
 
 import styled from "@emotion/styled"
 import { keyframes } from "@emotion/react"
+
+import Particles from "../components/Particles"
 
 import "../styles/globals.css"
 import '@fontsource/roboto/300.css'
@@ -29,14 +30,14 @@ const gradient =  keyframes`
     background-position: 0% 50%;
   }
 `
-const Background = styled.div`
+const Background = styled(Box)`
   margin: 0;
   background: linear-gradient(45deg, #DCD0FF, #FFCBA4);
   background-size: 400% 400%;
   animation: ${gradient} 16s ease infinite;
   z-index: -9999;
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
 `
 
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -54,10 +55,17 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
   return <>
     <CssBaseline /> 
-    <Particles />
-    <Background />
+    <Particles />   
     <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+      <Box
+        position="relative"
+        margin={0}
+        paddingY={4}
+        minHeight="100vh"
+      > 
+        <Background />
+        <Component {...pageProps} />  
+      </Box>
     </ThemeProvider>
   </>
 }

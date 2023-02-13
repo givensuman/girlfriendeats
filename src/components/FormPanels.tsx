@@ -18,6 +18,10 @@ import { type StackProps } from "@mui/material";
 import { ArrowForward, MyLocation } from "@mui/icons-material";
 
 function createDataLink(data: DataType) {
+    if (data.coordinates.shouldBeUsed) {
+        return `/search?for=${data.category}&coords=${data.coordinates.latitude},${data.coordinates.longitude}&within=${data.range}&costing=${data.price}`
+    }
+    
     return `/search?for=${data.category}&near=${data.location}&within=${data.range}&costing=${data.price}`
 }
 

@@ -13,10 +13,10 @@ const Home: NextPage = () => {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Box
-        height={"100vh"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
+        height="100vh"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
       >
         <Form />
       </Box>

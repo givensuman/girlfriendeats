@@ -1,4 +1,5 @@
 import { createNextApiHandler } from "@trpc/server/adapters/next";
+import { type inferRouterOutputs, type inferRouterInputs } from "@trpc/server";
 
 import { env } from "../../../env/server.mjs";
 import { createTRPCContext } from "../../../server/api/trpc";
@@ -17,3 +18,6 @@ export default createNextApiHandler({
         }
       : undefined,
 });
+
+export type RouterInput = inferRouterInputs<typeof appRouter>
+export type RouterOutput = inferRouterOutputs<typeof appRouter>

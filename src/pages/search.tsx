@@ -3,18 +3,35 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 
 import { api } from "../utils/api"
+
 import { Box } from "@mui/material"
+
+import RestaurantCard from "../components/RestaurantCard"
 
 const Search: NextPage = () => {
     
     const {
-        for: for_, near, costing, within
+        for: for_, near, coords, costing, within
     } = useRouter().query as {
         for: string,
-        near: string,
+        near?: string,
+        coords?: string,
         costing: string,
         within: string
     }
+
+    const location = coords 
+        ? {
+            latitude: coords?.split(",")[0],
+            longitude: coords?.split(",")[1],
+            useCoords: true
+        }
+        : {
+            location: near,
+            useCoords: false
+        } as const
+
+    const paramsAreValid = !!(for_ && within && costing && (near || coords))
 
     const { 
         data, fetchNextPage
@@ -22,23 +39,29 @@ const Search: NextPage = () => {
         term: for_,
         radius: within,
         price: costing,
-        location: near,
-        useCoords: false
+        ...location
     }, {
-        enabled: !!(for_ && within && costing && near),
+        enabled: paramsAreValid,
         getNextPageParam: (lastPage) => lastPage.nextCursor
     })
 
-    console.log(data?.pages.flatMap(page => page))
-
     return (<>
         <Head>
-            <title>{for_} in {near}</title>
+            <title>
+                {paramsAreValid && (coords 
+                    ? `${for_} near you` 
+                    : `${for_} near ${near}`
+                )}
+            </title>
         </Head>
-        <Box>
+        <Box
+        >
             {data && data.pages.flatMap(page => (
                 page.data.businesses.map(item => (
-                    <h1 key={item.id}>{item.name}</h1>
+                    <RestaurantCard
+                        key={item.id}
+                        data={item}
+                    />
                 ))
             ))}
         </Box>
