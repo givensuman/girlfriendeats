@@ -55,12 +55,23 @@ const Search: NextPage = () => {
             </title>
         </Head>
         <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            px={4}
+            sx={{
+                scrollSnapPointsY: "repeat(345px)",
+                scrollSnapType: "y mandatory"
+            }}
         >
             {data && data.pages.flatMap(page => (
                 page.data.businesses.map(item => (
                     <RestaurantCard
                         key={item.id}
                         data={item}
+                        sx={{
+                            scrollSnapAlign: "start"
+                        }}
                     />
                 ))
             ))}
