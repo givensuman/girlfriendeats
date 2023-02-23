@@ -5,8 +5,8 @@ import Error from "../components/Error"
 export const _Error = () => {
     return (
         <Error 
-            alertTitle="You're too picky!"
-            alertSubtitle="I couldn't find anything meeting those criteria. Try again with a different request."
+            alertTitle="Something broke..."
+            alertSubtitle="Something went wrong behind the scenes."
             buttonLabel="Start Over"
         />
     )

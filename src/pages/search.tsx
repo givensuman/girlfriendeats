@@ -103,7 +103,11 @@ const Search: NextPage = () => {
 
     if (isError) {
         return (
-            <Error />
+            <Error 
+                alertTitle="You're too picky!"
+                alertSubtitle="I couldn't find anything meeting those criteria. Try again with a different request."
+                buttonLabel="Start Over"
+            />
         )
     }
 
