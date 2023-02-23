@@ -60,7 +60,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <Box
         position="relative"
         margin={0}
-        paddingY={4}
         minHeight="100vh"
       > 
         <Background />

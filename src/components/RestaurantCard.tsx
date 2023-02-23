@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { type RouterOutput } from "../pages/api/trpc/[trpc]"
 
@@ -6,28 +6,81 @@ import {
     Box, 
     Card, CardHeader, CardMedia, CardContent, CardActions,
     Collapse,
-    Chip, ListItem,
-    IconButton,
+    Chip, Badge, Icon,
     Typography,
+    Button,
+    Link,
+    Divider,
+    Skeleton,
 } from "@mui/material"
-import { type IconButtonProps, type CardProps } from "@mui/material"
-import { Favorite, Share, ExpandMore, MoreVert } from "@mui/icons-material"
+import { type IconProps, type TypographyProps, type CardProps, type BoxProps } from "@mui/material"
+import {  
+  ExpandMore, 
+  Star, StarBorder, StarHalf,
+  Phone, Business, Web,
+} from "@mui/icons-material"
 import { styled } from "@mui/material/styles"
 
-interface ShowMoreProps extends IconButtonProps {
+interface ShowMoreProps extends IconProps {
     expand: boolean;
 }
 
 const ShowMore = styled((props: ShowMoreProps) => {
-        const { expand, ...other } = props;
-        return <IconButton {...other} />;
+        const { expand, children, sx, ...other } = props;
+        return (
+          <Icon 
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              ...sx
+            }}
+            {...other}
+          >
+            {children}
+          </Icon>
+        );
     })(({ theme, expand }) => ({
         transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-        marginLeft: 'auto',
         transition: theme.transitions.create('transform', {
             duration: theme.transitions.duration.shortest,
     }),
 }));
+
+const CollapseElement = ({
+  icon,
+  sx,
+  ...props
+}: {
+  icon?: JSX.Element
+} & TypographyProps) => {
+  return (
+    <Typography 
+      variant="body1"
+      color="text.primary"
+      sx={{
+        display: "flex",
+        marginBottom: 1,
+        maxWidth: "100%",
+        ...sx
+      }}
+      {...props}
+    >
+      {icon &&
+        <Icon
+          sx={{
+            position: "relative",
+            bottom: 5,
+            marginRight: 1,
+          }}
+        >
+          {icon}
+        </Icon>
+      }
+      {props.children}
+    </Typography>
+  )
+}
 
 type ArrayElement<A> = A extends readonly (infer T)[] ? T : never
 
@@ -43,17 +96,20 @@ export default function RestaurantCard({
         setExpanded(state => !state)
     }
 
+    const distanceInMiles = Math.round((data.distance/1609.344) * 10)/10
+
     return (
         <Card
-            sx={{ maxWidth: 345, my: 3, ...sx }}
+            sx={{ 
+              maxWidth: "90vw",
+              width: 345,
+              my: 3, 
+              overflow: "visible", 
+              ...sx 
+            }}
             {...props}
-        >
+        >      
         <CardHeader
-          action={
-            <IconButton aria-label="settings">
-              <MoreVert />
-            </IconButton>
-          }
           title={data.name}
           subheader={<>
             <Box
@@ -90,59 +146,174 @@ export default function RestaurantCard({
           height="194"
           image={data.image_url}
           alt="Paella dish"
+          onClick={() => window.open(data.url, "_blank")}
+          sx={{
+            cursor: "pointer"
+          }}
         />
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.
+        <CardContent sx={{ width: "100%" }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            component="div"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "center"
+            }}
+          >
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              {[...Array(Math.floor(data.rating))].map((_, i) => (
+                <Icon key={i}>
+                  <Star />
+                </Icon>
+              ))}
+              {(Math.ceil(data.rating) - Math.floor(data.rating)) >= 0.5 && 
+                <Icon>
+                  <StarHalf />
+                </Icon>
+              }
+              {[...Array(5 - Math.ceil(data.rating))].map((_, i) => (
+                <Icon key={i}>
+                  <StarBorder />
+                </Icon>
+              ))}
+              <Typography ml={1} fontSize={15} sx={{
+                position: "relative",
+                top: 2
+              }}>
+                {`(${data.review_count})`}
+              </Typography>
+            </Typography>
+            <Typography mt={1}>
+              {data.price}
+            </Typography>
+            <Typography mt={1}>
+              {`${distanceInMiles} mile${distanceInMiles !== 1 ? "s" : ""}`}
+            </Typography>
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <Favorite />
-          </IconButton>
-          <IconButton aria-label="share">
-            <Share />
-          </IconButton>
+        <CardActions 
+          disableSpacing
+          sx={{
+            paddingTop: 0,
+          }}
+        >
+          <Button
+            onClick={handleExpandClick}
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center"
+            }}
+          >
           <ShowMore
             expand={expanded}
-            onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
             <ExpandMore />
           </ShowMore>
+          </Button>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse 
+          in={expanded} 
+          timeout="auto" 
+          unmountOnExit
+        >
+          <Divider />
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-              aside for 10 minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-              medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-              occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-              large plate and set aside, leaving chicken and chorizo in the pan. Add
-              pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-              stirring often until thickened and fragrant, about 10 minutes. Add
-              saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and
-              peppers, and cook without stirring, until most of the liquid is absorbed,
-              15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-              mussels, tucking them down into the rice, and cook again without
-              stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don&apos;t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
+            <Typography
+              variant="body1"
+              component="div"
+            >
+              <CollapseElement>
+                <Typography
+                sx={{
+                  position: "relative",
+                  left: 20
+                }}
+                my={1}
+                component="div"
+              >
+                <Badge 
+                  badgeContent={data.is_closed
+                    ? "Closed"
+                    : "Open"
+                  }
+                  color={data.is_closed
+                    ? "error"
+                    : "success"
+                  }
+                />
+              </Typography>
+            </CollapseElement>
+              <CollapseElement icon={<Phone />}>
+                {data.display_phone}
+              </CollapseElement>
+              <CollapseElement icon={<Business />}>
+                {data.location.display_address.join(", ")}
+              </CollapseElement>
+              <CollapseElement icon={<Web />}>
+                <Link 
+                  width="90%"
+                  sx={{ cursor: "pointer" }}
+                  href={data.url}
+                >
+                  <Typography 
+                    noWrap
+                    component="div"
+                  >
+                    {data.url.slice(12, data.url.length)}
+                  </Typography>
+                </Link>
+              </CollapseElement>
+              <CollapseElement>
+                  {data.transactions.map((transaction, i) => (
+                      <Chip 
+                          key={i}
+                          label={transaction.slice(0, 1).toUpperCase() + transaction.slice(1, transaction.length)}
+                          sx={{
+                            mr: 0.3,
+                            marginY: 0.15
+                          }}
+                      />
+                  ))}
+              </CollapseElement>
+            </Typography>    
           </CardContent>
         </Collapse>
       </Card>
     )
+}
+
+export function SkeletonRestaurantCard(props: BoxProps) {
+  return (
+    <Box {...props}>
+      <Skeleton 
+        width={345}
+        height={50}
+        sx={{
+          maxWidth: "90vw"
+        }}
+      />
+      <Skeleton 
+        width={345}
+        height={200}
+        sx={{
+          maxWidth: "90vw",
+          position: "relative",
+          bottom: 20
+        }}
+      />
+    </Box>
+  )
 }

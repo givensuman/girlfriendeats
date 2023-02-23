@@ -8,6 +8,8 @@ import {
     Typography,
 } from "@mui/material"
 
+import elena from "../assets/elena.png"
+
 function a11yProps(index: number) {
     return {
         id: `vertical-tab-${index}`,
@@ -24,22 +26,23 @@ const initialData = {
         shouldBeUsed: false
     },
     range: 5, 
-    price: 2
+    price: [1, 2]
 }
 export type DataType = typeof initialData
 
 export const DataContext = createContext(initialData)
 
-export const FormControlsContext = createContext({
-    currentIndex: 0,
-    incrementIndex: () => {}, // eslint-disable-line
-    handleInputChange: (category: keyof DataType, e: React.SyntheticEvent<EventTarget> | Event) => {}, // eslint-disable-line
+export const FormControlsContext = createContext<Partial<{
+    currentIndex: number,
+    incrementIndex: () => void,
+    handleInputChange: (category: keyof DataType, e: React.SyntheticEvent<EventTarget> | Event) => void,
     getCurrentLocation: (
-        successCallback?: (position?: GeolocationPosition) => void, // eslint-disable-line
-        errorCallback?: PositionErrorCallback // eslint-disable-line
-    ) => {}, // eslint-disable-line
-    toggleCoordinatesShouldBeUsed: (switchTo?: boolean) => {} // eslint-disable-line
-})
+        successCallback?: (position?: GeolocationPosition) => void,
+        errorCallback?: PositionErrorCallback
+    ) => void,
+    toggleCoordinatesShouldBeUsed: (switchTo?: boolean) => void,
+    handlePriceInputChange: (event: Event, newValue: number | number[]) => void
+}>>({})
 
 export function isLengthy(...args: string[]) {
     const boolMap = args.map(dataValue => {
@@ -60,6 +63,12 @@ export default function Form() {
         setData(state => ({
             ...state,
             [category]: (e.target as HTMLInputElement).value
+        }))
+    }
+    const handlePriceInputChange = (event: Event, newValue: number | number[]) => {
+        setData(state => ({
+            ...state,
+            price: newValue as number[]
         }))
     }
 
@@ -103,7 +112,8 @@ export default function Form() {
             incrementIndex: incrementIndex,
             handleInputChange: handleInputChange,
             getCurrentLocation: getCurrentLocation,
-            toggleCoordinatesShouldBeUsed: toggleCoordinatesShouldBeUsed
+            toggleCoordinatesShouldBeUsed: toggleCoordinatesShouldBeUsed,
+            handlePriceInputChange: handlePriceInputChange
         }}>
         <Box
             display="flex"

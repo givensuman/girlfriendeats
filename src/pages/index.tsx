@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>girlfriend eats</title>
+        <title>girlfriendeats</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Box

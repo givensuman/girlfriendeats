@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { DataContext, FormControlsContext, isLengthy } from "./Form"
 import { type DataType } from "./Form"
@@ -18,11 +18,22 @@ import { type StackProps } from "@mui/material";
 import { ArrowForward, MyLocation } from "@mui/icons-material";
 
 function createDataLink(data: DataType) {
+
+    const createRangeOfNumbers = (nums: number[]) => {
+        let start = nums[0] ?? 1
+        let end = nums[1] ?? 2
+        const result: number[] = []
+        for (let i = start; i <= end; i++) {
+            result.push(i)
+        }
+        return result.join(",")
+    }
+
     if (data.coordinates.shouldBeUsed) {
-        return `/search?for=${data.category}&coords=${data.coordinates.latitude},${data.coordinates.longitude}&within=${data.range}&costing=${data.price}`
+        return `/search?for=${data.category}&coords=${data.coordinates.latitude},${data.coordinates.longitude}&within=${data.range}&costing=${createRangeOfNumbers(data.price)}`
     }
     
-    return `/search?for=${data.category}&near=${data.location}&within=${data.range}&costing=${data.price}`
+    return `/search?for=${data.category}&near=${data.location}&within=${data.range}&costing=${createRangeOfNumbers(data.price)}`
 }
 
 export function TheFood() {
@@ -34,14 +45,14 @@ export function TheFood() {
 
     return (
         <TabPanel
-            value={currentIndex}
+            value={currentIndex!}
             index={0}
         >
                 <TextField
                     variant="outlined"
                     label="What are you hungry for?"
                     helperText="Pho, boba, french fries, etc."
-                    onChange={e => handleInputChange("category", e)}
+                    onChange={e => handleInputChange!("category", e)}
                     value={data.category}
                 />
                 <Button
@@ -77,12 +88,12 @@ export function ThePlace() {
             }
         })
 
-        getCurrentLocation(
+        getCurrentLocation!(
             () => {
                 setIsAwaiting(false)
                 setPermissionsAccepted(true)
                 setPermissionsDenied(false)
-                incrementIndex()
+                incrementIndex!()
             }, 
             err => {
                 console.error("Error getting your location!", err)
@@ -90,12 +101,12 @@ export function ThePlace() {
                 setPermissionsAccepted(false)
                 setPermissionsDenied(true)
             }
-        )
+        )!
     }
 
     if (data.coordinates.shouldBeUsed && permissionsAccepted) return (
         <TabPanel
-            value={currentIndex}
+            value={currentIndex!}
             index={1}
         >
            <Typography 
@@ -106,7 +117,7 @@ export function ThePlace() {
             </Typography>
             <Button
                 variant="outlined"
-                onClick={() => toggleCoordinatesShouldBeUsed(false)}
+                onClick={() => toggleCoordinatesShouldBeUsed!(false)}
             >
                 Enter location manually
             </Button>
@@ -115,14 +126,14 @@ export function ThePlace() {
 
     return (
         <TabPanel
-            value={currentIndex}
+            value={currentIndex!}
             index={1}
         >
             <TextField
                 variant="outlined"
                 label="Where you at girl?"
                 helperText="A zip code, city, or address will work"
-                onChange={e => handleInputChange("location", e)}
+                onChange={e => handleInputChange!("location", e)}
                 value={data.location}
             />
             
@@ -156,12 +167,17 @@ export function TheDetails() {
 
     const data = useContext(DataContext)
     const {
-        currentIndex, handleInputChange
+        currentIndex, handleInputChange, handlePriceInputChange
     } = useContext(FormControlsContext)
+
+    const [ viewResultsClicked, setViewResultsClicked ] = useState(false)
+    const handleViewResultsClicked = () => {
+        setViewResultsClicked(true)
+    }
 
     return (
         <TabPanel
-            value={currentIndex}
+            value={currentIndex!}
             index={2}
         >
             <Stack>
@@ -172,7 +188,7 @@ export function TheDetails() {
                     valueLabelFormat={value => `${value} miles`}
                     min={1}
                     max={20}
-                    onChange={(e) => handleInputChange("range", e)}
+                    onChange={(e) => handleInputChange!("range", e)}
                 />
             </Stack>
             <Stack>
@@ -185,16 +201,34 @@ export function TheDetails() {
                     min={1}
                     max={4}
                     marks
-                    onChange={e => handleInputChange("price", e)}
+                    onChange={handlePriceInputChange}
                 />
-            </Stack>
-                <Button variant="contained">
-                    <Link href={createDataLink(data)}>
-                        {data.price < 3
-                        ? "View results"
-                        : "Damn okay she bougie"}
-                    </Link>
-                </Button>
+            </Stack>        
+                <Link 
+                    href={createDataLink(data)}
+                    style={{
+                        width: "100%"
+                    }}
+                    onClick={handleViewResultsClicked}
+                    aria-disabled={viewResultsClicked}
+                >
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            width: "100%"                       
+                        }}
+                        disabled={viewResultsClicked}
+                    >
+                        {
+                            viewResultsClicked
+                            ? <CircularProgress 
+                                color="secondary"
+                                size={20}
+                            />
+                            : "View Results"
+                        }
+                    </Button>
+                </Link>
         </TabPanel>
     )
 }
