@@ -121,7 +121,7 @@ export default function Form() {
             alignItems="center"
         >
             <Typography 
-                variant="h2"
+                variant="h4"
                 mb={1}
                 display="flex"
                 component="div"
@@ -129,8 +129,8 @@ export default function Form() {
             >
                 girlfriend
                 <Typography
+                    variant="h4"
                     color="secondary"
-                    variant="h2"
                     component="div"              
                 >
                     eats
@@ -140,8 +140,8 @@ export default function Form() {
                 bgcolor="background.paper"
                 display="flex"
                 flexGrow={1}
-                height={250}
-                width={400}
+                width={500}
+                maxWidth="90vw"
                 sx={(theme) => ({
                     boxShadow: theme.shadows[10],
                     borderRadius: theme.shape.borderRadius/4
@@ -174,10 +174,28 @@ export default function Form() {
                         {...a11yProps(2)}
                     />
                 </Tabs>
-                <Box p={3} width="90%">
-                    <TheFood />
-                    <ThePlace />
-                    <TheDetails />
+                <Box 
+                    p={3} 
+                    width="90%"
+                    minHeight="fit-content"
+                    position="relative"
+                    paddingBottom={4}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    flexGrow={1}
+                >
+                    <div>
+                        <TheFood />
+                        <ThePlace />
+                        <TheDetails />
+                    </div>
+                    <Typography 
+                        color="GrayText"
+                        fontSize={16}
+                    >
+                        Made with 💜 for my girlfriend
+                    </Typography>
                 </Box>
             </Box>
         </Box>

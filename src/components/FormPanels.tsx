@@ -135,6 +135,7 @@ export function ThePlace() {
                 helperText="A zip code, city, or address will work"
                 onChange={e => handleInputChange!("location", e)}
                 value={data.location}
+                disabled={isAwaiting}
             />
             
             {isLengthy(data.location)
