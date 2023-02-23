@@ -4,6 +4,42 @@ import { createTRPCRouter, publicProcedure } from "../trpc";
 
 const API_URL = "https://api.yelp.com/v3/businesses/search?sort_by=best_match"
 
+const DataShape = z.object({
+    businesses: z.array(z.object({
+        alias: z.string(),
+        categories: z.array(z.object({
+            alias: z.string(),
+            title: z.string()
+        })),
+        coordinates: z.object({
+            latitude: z.number(),
+            longitude: z.number()
+        }),
+        display_phone: z.string(),
+        distance: z.number(),
+        id: z.string(),
+        image_url: z.string().url(),
+        is_closed: z.boolean(),
+        location: z.object({
+            address1: z.string().nullish(),
+            address2: z.string().nullish(),
+            address3: z.string().nullish(),
+            city: z.string(),
+            country: z.string(),
+            display_address: z.array(z.string()),
+            state: z.string(),
+            zip_code: z.string(),
+        }),
+        name: z.string(),
+        phone: z.string(),
+        price: z.string(),
+        rating: z.number(),
+        review_count: z.number(),
+        transactions: z.array(z.string()),
+        url: z.string().url()
+    }))
+})
+
 export const yelpRouter = createTRPCRouter({
     search : publicProcedure
         .input(z.object({
@@ -23,42 +59,8 @@ export const yelpRouter = createTRPCRouter({
             })
         ])))
         .output(z.object({
-            nextCursor: z.number().nullish(),
-            data: z.object({
-                    businesses: z.array(z.object({
-                        alias: z.string(),
-                        categories: z.array(z.object({
-                            alias: z.string(),
-                            title: z.string()
-                        })),
-                        coordinates: z.object({
-                            latitude: z.number(),
-                            longitude: z.number()
-                        }),
-                        display_phone: z.string(),
-                        distance: z.number(),
-                        id: z.string(),
-                        image_url: z.string().url(),
-                        is_closed: z.boolean(),
-                        location: z.object({
-                            address1: z.string(),
-                            address2: z.string().nullish(),
-                            address3: z.string().nullish(),
-                            city: z.string(),
-                            country: z.string(),
-                            display_address: z.array(z.string()),
-                            state: z.string(),
-                            zip_code: z.string(),
-                        }),
-                        name: z.string(),
-                        phone: z.string(),
-                        price: z.string(),
-                        rating: z.number(),
-                        review_count: z.number(),
-                        transactions: z.array(z.string()),
-                        url: z.string().url()
-                    }))
-                })
+                nextCursor: z.number().nullish(),
+                data: DataShape
             })
         )
         .query(async ({ input }) => {
@@ -66,7 +68,7 @@ export const yelpRouter = createTRPCRouter({
             const limit = 20
             const { cursor } = input
 
-            let nextCursor: typeof cursor | undefined = undefined
+            let nextCursor: typeof cursor | undefined = cursor
     
             const locationString = input.useCoords 
                 ? `latitude=${input.latitude}&longitude=${input.longitude}`
@@ -92,15 +94,16 @@ export const yelpRouter = createTRPCRouter({
             })
                 .then(res => res.json())
 
-            if (cursor) {
-                nextCursor = cursor + limit
+            if (nextCursor) {
+                nextCursor += limit
             } else {
                 nextCursor = limit
             }
 
             return {
                 data,
-                nextCursor
+                nextCursor,
+                // ...DataShape.safeParse(data)?.error.format()
             }
         })
 });
