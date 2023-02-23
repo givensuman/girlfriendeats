@@ -175,27 +175,33 @@ export default function Form() {
                     />
                 </Tabs>
                 <Box 
-                    p={3} 
                     width="90%"
+                    p={3} 
                     minHeight="fit-content"
                     position="relative"
                     paddingBottom={4}
                     display="flex"
                     flexDirection="column"
                     justifyContent="space-between"
-                    flexGrow={1}
+                    flexGrow={2}
                 >
                     <div>
                         <TheFood />
                         <ThePlace />
                         <TheDetails />
                     </div>
-                    <Typography 
-                        color="GrayText"
-                        fontSize={16}
+                    <Box
+                        display="flex"
+                        justifyContent="center"
                     >
-                        Made with 💜 for my girlfriend
-                    </Typography>
+                        <Typography 
+                            color="GrayText"
+                            fontSize={16}
+                            mt={2}
+                        >
+                            Made with 💜 for my girlfriend
+                        </Typography>
+                    </Box>
                 </Box>
             </Box>
         </Box>
