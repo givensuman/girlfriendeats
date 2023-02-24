@@ -8,6 +8,7 @@ export const PageNotFound = () => {
             alertTitle="I'm getting mixed messages!"
             alertSubtitle="I'm not sure what page you're looking for."
             buttonLabel="Go Home"
+            pageTitle="404"
         />
     )
 }

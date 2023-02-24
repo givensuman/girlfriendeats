@@ -1,7 +1,8 @@
 import React from "react"
+import Head from "next/head"
 
 import {
-    Box, Alert, Button, Typography, AlertTitle
+    Box, Alert, Button, AlertTitle
 } from "@mui/material"
 import type { BoxProps } from "@mui/material"
 
@@ -11,14 +12,20 @@ import Link from "next/link"
 export const Error: React.FC<{
     alertTitle: string,
     alertSubtitle: string,
-    buttonLabel: string
+    buttonLabel: string,
+    pageTitle?: string,
 } & BoxProps> = ({
     alertTitle,
     alertSubtitle,
     buttonLabel,
+    pageTitle,
     ...props
 }) => {
     return (
+        <>
+        <Head>
+            <title>{pageTitle ?? "Error"}</title>
+        </Head>
         <Box 
             width="100vw"
             display="flex"
@@ -63,6 +70,7 @@ export const Error: React.FC<{
                 </Link>
             </Box>
         </Box>
+        </>
     )
 }
 

@@ -101,12 +101,13 @@ const Search: NextPage = () => {
         )
     }
 
-    if (isError) {
+    if (isError || (data && data.pages[0]?.data.businesses.length === 0)) {
         return (
             <Error 
                 alertTitle="You're too picky!"
                 alertSubtitle="I couldn't find anything meeting those criteria. Try again with a different request."
                 buttonLabel="Start Over"
+                pageTitle="girlfriendeats"
             />
         )
     }
