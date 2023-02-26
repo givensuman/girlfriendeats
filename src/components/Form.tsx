@@ -125,13 +125,18 @@ export default function Form() {
                 mb={1}
                 display="flex"
                 component="div"
-
+                style={{
+                    fontSize: "min(15vw, 4rem)"
+                }}
             >
                 girlfriend
                 <Typography
                     variant="h4"
                     color="secondary"
-                    component="div"              
+                    component="div"
+                    style={{
+                        fontSize: "min(15vw, 4rem)"
+                    }}              
                 >
                     eats
                 </Typography>
