@@ -21,7 +21,7 @@ function createDataLink(data: DataType) {
 
     const createRangeOfNumbers = (nums: number[]) => {
         let start = nums[0] ?? 1
-        let end = nums[1] ?? 2
+        let end = nums[1] ?? 1
         const result: number[] = []
         for (let i = start; i <= end; i++) {
             result.push(i)
