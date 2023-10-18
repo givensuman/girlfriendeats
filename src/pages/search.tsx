@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { type NextPage } from "next"
@@ -6,10 +8,13 @@ import { useRouter } from "next/router"
 
 import { api } from "../utils/api"
 
-import { Box, CircularProgress } from "@mui/material"
+import { Box } from "@mui/material"
+import { css, keyframes } from "@emotion/react"
 
 import RestaurantCard, { SkeletonRestaurantCard } from "../components/RestaurantCard"
 import Error from "../components/Error"
+
+import elena from "../assets/elena.png"
 
 const useIsInViewport = (ref: any) => {
     const observerRef = useRef<IntersectionObserver | null>(null)
@@ -36,6 +41,18 @@ const useIsInViewport = (ref: any) => {
 
     return isIntersecting
 }
+
+const spin = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`
+const animation = css`
+    animation: ${spin} 1s ease-in-out infinite;
+`
 
 const Search: NextPage = () => {
     
@@ -96,7 +113,11 @@ const Search: NextPage = () => {
                 justifyContent="center"
                 pt={"30vh"}
             >
-                <CircularProgress />
+                <img
+                    src={elena.src}
+                    alt="Elena"
+                    css={animation}
+                />
             </Box>
         )
     }
