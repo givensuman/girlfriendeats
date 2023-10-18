@@ -9,6 +9,7 @@ import {
 } from "@mui/material"
 
 import elena from "../assets/elena.png"
+import elenaError from "../assets/elenaError.png"
 
 function a11yProps(index: number) {
     return {
@@ -105,46 +106,42 @@ export default function Form() {
         }))
     }
 
+    const [ elenaSrc, setElenaSrc ] = useState(elena.src)
+
+    const toggleElenaSrc = () => {
+        setElenaSrc(elenaError.src)
+        setTimeout(() => setElenaSrc(elena.src), 200)
+    }
+
     return (
         <DataContext.Provider value={data}>
         <FormControlsContext.Provider value={{
-            currentIndex: currentIndex,
-            incrementIndex: incrementIndex,
-            handleInputChange: handleInputChange,
-            getCurrentLocation: getCurrentLocation,
-            toggleCoordinatesShouldBeUsed: toggleCoordinatesShouldBeUsed,
-            handlePriceInputChange: handlePriceInputChange
+            currentIndex,
+            incrementIndex,
+            handleInputChange,
+            getCurrentLocation,
+            toggleCoordinatesShouldBeUsed,
+            handlePriceInputChange
         }}>
         <Box
             display="flex"
             flexDirection="column"
             alignItems="center"
         >
-            <Typography 
-                variant="h4"
-                mb={1}
-                display="flex"
-                component="div"
+            <img
+                src={elenaSrc}
+                alt="Elena"
+                onClick={toggleElenaSrc}
                 style={{
-                    fontSize: "min(15vw, 4rem)"
+                    maxHeight: 80,
+                    marginLeft: "50%",
+                    cursor: "pointer"
                 }}
-            >
-                girlfriend
-                <Typography
-                    variant="h4"
-                    color="secondary"
-                    component="div"
-                    style={{
-                        fontSize: "min(15vw, 4rem)"
-                    }}              
-                >
-                    eats
-                </Typography>
-            </Typography>
+            />
             <Box
                 bgcolor="background.paper"
                 display="flex"
-                flexGrow={1}
+                flexDirection="column"
                 width={500}
                 maxWidth="90vw"
                 sx={(theme) => ({
@@ -152,60 +149,93 @@ export default function Form() {
                     borderRadius: theme.shape.borderRadius/4
                 })}
             >
-                <Tabs
-                    value={currentIndex}
-                    orientation="vertical"
-                    sx={{
-                        borderRight: 1,
-                        borderColor: "divider"
-                    }}
-                    onChange={handleTabChange}
-                >
-                    <Tab 
-                        label="The food" 
-                        {...a11yProps(0)}
-                    />
-                    <Tab 
-                        label="The place"
-                        disabled={!isLengthy(data.category)} 
-                        {...a11yProps(1)}
-                    />
-                    <Tab 
-                        label="The details" 
-                        disabled={
-                            !isLengthy(data.category) 
-                            || (!isLengthy(data.location) && !isLengthy(data.coordinates.longitude, data.coordinates.latitude))
-                        }
-                        {...a11yProps(2)}
-                    />
-                </Tabs>
-                <Box 
-                    width="90%"
-                    p={3} 
-                    minHeight="fit-content"
-                    position="relative"
-                    paddingBottom={4}
+                <Box
+                    p={2}
                     display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    flexGrow={2}
+                    justifyContent="center"
+                    borderBottom={1}
+                    borderColor="#DCD0FF"
                 >
-                    <div>
-                        <TheFood />
-                        <ThePlace />
-                        <TheDetails />
-                    </div>
-                    <Box
+                    <Typography 
+                        variant="h4"
                         display="flex"
-                        justifyContent="center"
+                        component="div"
+                        style={{
+                            fontSize: "min(15vw, 3rem)"
+                        }}
                     >
-                        <Typography 
-                            color="GrayText"
-                            fontSize={16}
-                            mt={2}
+                        girlfriend
+                        <Typography
+                            variant="h4"
+                            color="secondary"
+                            component="div"
+                            style={{
+                                fontSize: "min(15vw, 3rem)"
+                            }}              
                         >
-                            Made with 💜 for my girlfriend
+                            eats
                         </Typography>
+                    </Typography>
+                </Box>
+                <Box
+                    display="flex"
+                    flexGrow={1}
+                >
+                    <Tabs
+                        value={currentIndex}
+                        orientation="vertical"
+                        sx={{
+                            borderRight: 1,
+                            borderColor: "divider"
+                        }}
+                        onChange={handleTabChange}
+                    >
+                        <Tab 
+                            label="The food" 
+                            {...a11yProps(0)}
+                        />
+                        <Tab 
+                            label="The place"
+                            disabled={!isLengthy(data.category)} 
+                            {...a11yProps(1)}
+                        />
+                        <Tab 
+                            label="The details" 
+                            disabled={
+                                !isLengthy(data.category) 
+                                || (!isLengthy(data.location) && !isLengthy(data.coordinates.longitude, data.coordinates.latitude))
+                            }
+                            {...a11yProps(2)}
+                        />
+                    </Tabs>
+                    <Box 
+                        width="90%"
+                        p={3} 
+                        minHeight="fit-content"
+                        position="relative"
+                        paddingBottom={4}
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="space-between"
+                        flexGrow={2}
+                    >
+                        <div>
+                            <TheFood />
+                            <ThePlace />
+                            <TheDetails />
+                        </div>
+                        <Box
+                            display="flex"
+                            justifyContent="center"
+                        >
+                            <Typography 
+                                color="GrayText"
+                                fontSize={16}
+                                mt={2}
+                            >
+                                Made with 💜 for my girlfriend
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
