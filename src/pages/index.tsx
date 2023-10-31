@@ -1,14 +1,12 @@
 import { type NextPage } from "next"
-import Head from "next/head"
 
-import { Box } from "@mui/material"
 
-import Form from "../components/Form"
+import RestaurantCard from "../components/RestaurantCard"
 
 const Home: NextPage = () => {
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>girlfriendeats</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
@@ -19,7 +17,8 @@ const Home: NextPage = () => {
         alignItems="center"
       >
         <Form />
-      </Box>
+      </Box> */}
+      <RestaurantCard data={{} as any} />
     </>
   )
 }

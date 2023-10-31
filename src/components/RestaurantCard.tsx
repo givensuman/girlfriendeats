@@ -1,25 +1,11 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import { type RouterOutput } from "../pages/api/trpc/[trpc]"
+import { type RouterOutput } from "../pages/api/trpc/[trpc]";
 
 import {
-    Box, 
-    Card, CardHeader, CardMedia, CardContent, CardActions,
-    Collapse,
-    Chip, Badge, Icon,
-    Typography,
-    Button,
-    Link,
-    Divider,
-    Skeleton,
-} from "@mui/material"
-import { type IconProps, type TypographyProps, type CardProps, type BoxProps } from "@mui/material"
-import {  
-  ExpandMore, 
-  Star, StarBorder, StarHalf,
-  Phone, Business, Web,
-} from "@mui/icons-material"
-import { styled } from "@mui/material/styles"
+  Box, Card, CardContent, CardMedia, Icon, Skeleton, Typography, type BoxProps, type CardProps, type IconProps, type TypographyProps
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 interface ShowMoreProps extends IconProps {
     expand: boolean;
@@ -92,6 +78,51 @@ export default function RestaurantCard({
 
     const [ expanded, setExpanded ] = useState(false)
 
+    const _data = {
+      "alias": "asheville-pizza-and-brewing-company-asheville",
+      "categories": [
+        {
+          "alias": "pizza",
+          "title": "Pizza"
+        },
+        {
+          "alias": "breweries",
+          "title": "Breweries"
+        }
+      ],
+      "coordinates": {
+        "latitude": 35.622192,
+        "longitude": -82.553698
+      },
+      "display_phone": "(828) 254-1281",
+      "distance": 4361.505343084764,
+      "id": "IIjwLCESPEm0Q8fWGYxaOw",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/BeGAGA22YSJBW47NSSI-Cg/o.jpg",
+      "is_closed": false,
+      "location": {
+        "address1": "675 Merrimon Ave",
+        "address2": "",
+        "address3": "",
+        "city": "Asheville",
+        "country": "US",
+        "display_address": [
+          "675 Merrimon Ave",
+          "Asheville, NC 28804"
+        ],
+        "state": "NC",
+        "zip_code": "28804"
+      },
+      "name": "Asheville Pizza & Brewing Company",
+      "phone": "+18282541281",
+      "price": "$$",
+      "rating": 4,
+      "review_count": 501,
+      "transactions": [
+        "delivery"
+      ],
+      "url": "https://www.yelp.com/biz/asheville-pizza-and-brewing-company-asheville?adjust_creative=AAUeh8IM-yIYE84_grq3og&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=AAUeh8IM-yIYE84_grq3og"
+    }
+
     const handleExpandClick = () => {
         setExpanded(state => !state)
     }
@@ -99,199 +130,18 @@ export default function RestaurantCard({
     const distanceInMiles = Math.round((data.distance/1609.344) * 10)/10
 
     return (
-        <Card
-            sx={{ 
-              maxWidth: "90vw",
-              width: 345,
-              my: 3, 
-              overflow: "visible", 
-              ...sx 
-            }}
-            {...props}
-        >      
-        <CardHeader
-          title={data.name}
-          subheader={<>
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexShrink: 0,
-                    flexWrap: "wrap",
-                    listStyle: 'none',
-                    p: 0.5,
-                    m: 0,
-                    position: "relative",
-                    right: 5
-                }}
-                component="ul"
-            >
-                {data.categories.map((category, i) => (
-                    <Chip 
-                        key={i}
-                        label={category.title}
-                        size="small"
-                        component="li"
-                        sx={{
-                            mr: 0.3,
-                            marginY: 0.15
-                        }}
-                    />
-                ))}
-            </Box>
-          </>}
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image={data.image_url}
-          alt="Paella dish"
-          onClick={() => window.open(data.url, "_blank")}
-          sx={{
-            cursor: "pointer"
-          }}
-        />
-        <CardContent sx={{ width: "100%" }}>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            component="div"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              justifyContent: "center"
-            }}
-          >
-            <Typography
-              variant="body2"
-              component="div"
-              sx={{
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              {[...Array(Math.floor(data.rating))].map((_, i) => (
-                <Icon key={i}>
-                  <Star />
-                </Icon>
-              ))}
-              {(Math.ceil(data.rating) - Math.floor(data.rating)) >= 0.5 && 
-                <Icon>
-                  <StarHalf />
-                </Icon>
-              }
-              {[...Array(5 - Math.ceil(data.rating))].map((_, i) => (
-                <Icon key={i}>
-                  <StarBorder />
-                </Icon>
-              ))}
-              <Typography ml={1} fontSize={15} sx={{
-                position: "relative",
-                top: 2
-              }}>
-                {`(${data.review_count})`}
-              </Typography>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardMedia
+            image={_data.image_url}
+            title={_data.name}
+            sx={{ height: 140 }}
+          />
+            <CardContent>
+            <Typography variant="h5" gutterBottom>
+              {_data.name}
             </Typography>
-            <Typography mt={1}>
-              {data.price}
-            </Typography>
-            <Typography mt={1}>
-              {`${distanceInMiles} mile${distanceInMiles !== 1 ? "s" : ""}`}
-            </Typography>
-          </Typography>
-        </CardContent>
-        <CardActions 
-          disableSpacing
-          sx={{
-            paddingTop: 0,
-          }}
-        >
-          <Button
-            onClick={handleExpandClick}
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center"
-            }}
-          >
-          <ShowMore
-            expand={expanded}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMore />
-          </ShowMore>
-          </Button>
-        </CardActions>
-        <Collapse 
-          in={expanded} 
-          timeout="auto" 
-          unmountOnExit
-        >
-          <Divider />
-          <CardContent>
-            <Typography
-              variant="body1"
-              component="div"
-            >
-              <CollapseElement>
-                <Typography
-                sx={{
-                  position: "relative",
-                  left: 20
-                }}
-                my={1}
-                component="div"
-              >
-                <Badge 
-                  badgeContent={data.is_closed
-                    ? "Closed"
-                    : "Open"
-                  }
-                  color={data.is_closed
-                    ? "error"
-                    : "success"
-                  }
-                />
-              </Typography>
-            </CollapseElement>
-              <CollapseElement icon={<Phone />}>
-                {data.display_phone}
-              </CollapseElement>
-              <CollapseElement icon={<Business />}>
-                {data.location.display_address.join(", ")}
-              </CollapseElement>
-              <CollapseElement icon={<Web />}>
-                <Link 
-                  width="90%"
-                  sx={{ cursor: "pointer" }}
-                  href={data.url}
-                >
-                  <Typography 
-                    noWrap
-                    component="div"
-                  >
-                    {data.url.slice(12, data.url.length)}
-                  </Typography>
-                </Link>
-              </CollapseElement>
-              <CollapseElement>
-                  {data.transactions.map((transaction, i) => (
-                      <Chip 
-                          key={i}
-                          label={transaction.slice(0, 1).toUpperCase() + transaction.slice(1, transaction.length)}
-                          sx={{
-                            mr: 0.3,
-                            marginY: 0.15
-                          }}
-                      />
-                  ))}
-              </CollapseElement>
-            </Typography>    
-          </CardContent>
-        </Collapse>
-      </Card>
+            </CardContent>
+        </Card>
     )
 }
 
