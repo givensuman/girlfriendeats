@@ -155,7 +155,9 @@ export default function RestaurantCard({
     return (
         <Card 
           ref={clickRef}
-          sx={{ maxWidth: 345, boxShadow: isHovered ? 10 : 1, cursor: "pointer" }} 
+          sx={{ maxWidth: isOpen ? 690 : 345, boxShadow: isHovered ? 10 : 1, cursor: "pointer", transition: (theme) => theme.transitions.create("all", {
+            easing: theme.transitions.easing.sharp
+          })}} 
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => {
@@ -167,7 +169,6 @@ export default function RestaurantCard({
             title={_data.name}
             sx={{ height: 140 }}
           />
-          {isOpen ? "open" : "closed"}
         <CardHeader
           title={_data.name}
           subheader={<>
@@ -185,6 +186,22 @@ export default function RestaurantCard({
                 }}
                 component="ul"
             >
+                <Chip
+                  label={data.is_closed
+                    ? "Closed"
+                    : "Open"
+                  }
+                  color={data.is_closed
+                    ? "error"
+                    : "success"
+                  }
+                  component="li"
+                  size="small"
+                  sx={{
+                    mr: 0.3,
+                    marginY: 0.15
+                  }}
+                />
                 {_data.categories.map((category, i) => (
                     <Chip 
                         key={i}
