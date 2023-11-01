@@ -1,14 +1,29 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { type RouterOutput } from "../pages/api/trpc/[trpc]";
 
+import { Star, StarBorder, StarHalf } from "@mui/icons-material";
 import {
-  Box, Card, CardContent, CardMedia, Icon, Skeleton, Typography, type BoxProps, type CardProps, type IconProps, type TypographyProps
+  Box, Card, CardContent, CardHeader, CardMedia, Chip, Icon, Skeleton, Typography, type BoxProps, type CardProps, type IconProps, type TypographyProps
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 interface ShowMoreProps extends IconProps {
     expand: boolean;
+}
+
+const useOnClickOutisde = (ref: React.MutableRefObject<any>, callback: (event?: MouseEvent) => void) => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (!ref.current.contains(event.target as Node)) {
+      callback(event)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside)
+
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [ref])
 }
 
 const ShowMore = styled((props: ShowMoreProps) => {
@@ -127,20 +142,114 @@ export default function RestaurantCard({
         setExpanded(state => !state)
     }
 
-    const distanceInMiles = Math.round((data.distance/1609.344) * 10)/10
+    const distanceInMiles = Math.round((_data.distance/1609.344) * 10)/10
+
+    const [ isHovered, setIsHovered ] = useState(false)
+    const [ isOpen, setIsOpen ] = useState(false)
+
+    const clickRef = useRef<any>(null)
+    useOnClickOutisde(clickRef, () => {
+      setIsOpen(false)
+    })
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card 
+          ref={clickRef}
+          sx={{ maxWidth: 345, boxShadow: isHovered ? 10 : 1, cursor: "pointer" }} 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={() => {
+            setIsOpen(true)
+          }}
+        >
           <CardMedia
             image={_data.image_url}
             title={_data.name}
             sx={{ height: 140 }}
           />
-            <CardContent>
-            <Typography variant="h5" gutterBottom>
-              {_data.name}
+          {isOpen ? "open" : "closed"}
+        <CardHeader
+          title={_data.name}
+          subheader={<>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexShrink: 0,
+                    flexWrap: "wrap",
+                    listStyle: 'none',
+                    p: 0.5,
+                    m: 0,
+                    position: "relative",
+                    right: 5
+                }}
+                component="ul"
+            >
+                {_data.categories.map((category, i) => (
+                    <Chip 
+                        key={i}
+                        label={category.title}
+                        size="small"
+                        component="li"
+                        sx={{
+                            mr: 0.3,
+                            marginY: 0.15
+                        }}
+                    />
+                ))}
+            </Box>
+          </>}
+        />
+        <CardContent sx={{ width: "100%" }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            component="div"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "center"
+            }}
+          >
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{
+                display: "flex",
+                alignItems: "center"
+              }}
+            >
+              {[...Array(Math.floor(_data.rating))].map((_, i) => (
+                <Icon key={i}>
+                  <Star />
+                </Icon>
+              ))}
+              {(Math.ceil(_data.rating) - Math.floor(_data.rating)) >= 0.5 && 
+                <Icon>
+                  <StarHalf />
+                </Icon>
+              }
+              {[...Array(5 - Math.ceil(_data.rating))].map((_, i) => (
+                <Icon key={i}>
+                  <StarBorder />
+                </Icon>
+              ))}
+              <Typography ml={1} fontSize={15} sx={{
+                position: "relative",
+                top: 2
+              }}>
+                {`(${_data.review_count})`}
+              </Typography>
             </Typography>
-            </CardContent>
+            <Typography mt={1}>
+              {_data.price}
+            </Typography>
+            <Typography mt={1}>
+              {`${distanceInMiles} mile${distanceInMiles !== 1 ? "s" : ""}`}
+            </Typography>
+          </Typography>
+        </CardContent>
         </Card>
     )
 }
